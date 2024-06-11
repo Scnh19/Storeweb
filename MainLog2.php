@@ -10,15 +10,14 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
 	   $data = htmlspecialchars($data);
 	   return $data;
 	}
-	$username = validate($_POST['user_name']);
 	$email = validate($_POST['email']);
 	$pass = validate($_POST['password']);
 
 	if (empty($email)) {
-		header("Location: index.php?error=User Name is required");
+		header("Location: index.php?error=email is required");
 	    exit();
 	}else if(empty($pass)){
-        header("Location: index.php?error=modifiedby is required");
+        header("Location: index.php?error=password is required");
 	    exit();
 	}else{
 		$sql = "SELECT * FROM users WHERE email='$email' AND password='$pass'";

@@ -18,37 +18,35 @@ if (isset($_SESSION["user"])) {
     <div class="container">
         <?php
         if (isset($_POST["submit"])) {
-           $sku = $_POST["sku"];
-           $productname = $_POST["productname"];
-           $price = $_POST["price"];
-           $dateadded = $_POST["dateadded"];
-           $modifiedby = $_POST["modifiedby"];
+           $uname = $_POST["user_name"];
+           $fullname = $_POST["full_name"];
+           $email = $_POST["email"];
+           $pass = $_POST["password"];
 
-           $modifiedHash = password_hash($modifiedby, PASSWORD_DEFAULT);
+           $modifiedHash = password_hash($pass, PASSWORD_DEFAULT);
            
            $errors = array();
            
-           if (empty($sku) OR empty($productname) OR empty($price) OR empty($dateadded) OR empty($modifiedby)) {
+           if (empty($uname) OR empty($fullname) OR empty($email) OR empty($pass)) {
             array_push($errors,"All fields are required");
            }
-           if (!filter_var($sku)) {
-            array_push($errors, "SKU is not valid");
+           if (!filter_var($uname)) {
+            array_push($errors, "Username is not valid");
            }
-           if (!filter_var($productname)) {
-            array_push($errors, "Product is not valid");
+           if (!filter_var($fullname)) {
+            array_push($errors, "Fullname is not valid");
            }
-           if (!filter_var($price)) {
-            array_push($errors, "Price is not valid");
+           if (!filter_var($email)) {
+            array_push($errors, "Email is not valid");
            }
-           if (!filter_var($dateadded)) {
-            array_push($errors, "Price is not valid");
+           if (!filter_var($pass)) {
+            array_push($errors, "Password is not valid");
            }
-           if (!filter_var($modifiedby)) {
-            array_push($errors,"Unkown Modifier");
-           }
-           /*if ($password!==$passwordRepeat) {
+
+           if ($password!==$passwordRepeat) {
             array_push($errors,"Password does not match");
-           }*/
+           }
+
            require_once "database2.php";
            $sql = "SELECT * FROM productlist WHERE productname = '$productname'";
            $result = mysqli_query($conn, $sql);
@@ -61,11 +59,11 @@ if (isset($_SESSION["user"])) {
                 echo "<div class='alert alert-danger'>$error</div>";
             }
            }else{
-            $sql = "INSERT INTO productlist (sku, productname, price, dateadded, modifiedby) VALUES ( ?, ?, ?, ?, ?)";
+            $sql = "INSERT INTO productlist (sku, productname, price, dateadded, password) VALUES ( ?, ?, ?, ?, ?)";
             $stmt = mysqli_stmt_init($conn);
             $prepareStmt = mysqli_stmt_prepare($stmt,$sql);
             if ($prepareStmt) {
-                mysqli_stmt_bind_param($stmt, 'sssss', $sku, $productname, $price, $dateadded, $modifiedby);
+                mysqli_stmt_bind_param($stmt, 'sssss', $uname, $productname, $price, $dateadded, $pass);
                 mysqli_stmt_execute($stmt);
                 echo "<div class='alert alert-success'>The Product is registered successfully.</div>";
             }else{
@@ -77,24 +75,20 @@ if (isset($_SESSION["user"])) {
         ?>
         <form action="Registration2.php" method="post">
             <div class="form-group">
-            <label for="">SKU</label>
-                <input type="number" class="form-control" name="sku">
+            <label for="">Username</label>
+                <input type="number" class="form-control" name="user_name">
             </div>
             <div class="form-group">
-            <label for="">Product Name</label>
-                <input type="text" class="form-control" name="productname">
+            <label for="">Fullname</label>
+                <input type="text" class="form-control" name="full_name">
             </div>
             <div class="form-group">
-            <label for="">Product Price</label>
-                <input type="number" class="form-control" name="price">
+            <label for="">Email</label>
+                <input type="number" class="form-control" name="email">
             </div>
             <div class="form-group">
-                <label for="">Date & Time</label>
-                <input type="datetime-local" class="form-control" name="dateadded">
-            </div>
-            <div class="form-group">
-                <label for="">Modifier</label>
-                <input type="text" class="form-control" name="modifiedby">
+                <label for="">Password</label>
+                <input type="text" class="form-control" name="password">
             </div>
             <div class="form-btn">
                 <input type="submit" class="btn btn-primary" value="Add To Product List" name="submit">
