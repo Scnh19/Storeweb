@@ -1,8 +1,8 @@
 <?php
 
-$sname= "localhost";
-$unmae= "perry";
-$password = "4*!_AZ9phfN5Q@U]";
+$sname= "db";
+$unmae= "root";
+$password = "password";
 $db_name = "storeweb";
 $conn = mysqli_connect($sname, $unmae, $password, $db_name);
 
