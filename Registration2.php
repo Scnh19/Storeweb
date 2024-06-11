@@ -43,27 +43,27 @@ if (isset($_SESSION["user"])) {
             array_push($errors, "Password is not valid");
            }
 
-           if ($password!==$passwordRepeat) {
+           if ($pass!==$passwordRepeat) {
             array_push($errors,"Password does not match");
            }
 
            require_once "database2.php";
-           $sql = "SELECT * FROM productlist WHERE productname = '$productname'";
+           $sql = "SELECT * FROM users WHERE email = '$email'";
            $result = mysqli_query($conn, $sql);
            $rowCount = mysqli_num_rows($result);
            if ($rowCount>0) {
-            array_push($errors,"Product already exists.");
+            array_push($errors,"User already exists.");
            }
            if (count($errors)>0) {
             foreach ($errors as $error) {
                 echo "<div class='alert alert-danger'>$error</div>";
             }
            }else{
-            $sql = "INSERT INTO productlist (sku, productname, price, dateadded, password) VALUES ( ?, ?, ?, ?, ?)";
+            $sql = "INSERT INTO productlist (user_name, full_name, email, password) VALUES ( ?, ?, ?, ?)";
             $stmt = mysqli_stmt_init($conn);
             $prepareStmt = mysqli_stmt_prepare($stmt,$sql);
             if ($prepareStmt) {
-                mysqli_stmt_bind_param($stmt, 'sssss', $uname, $productname, $price, $dateadded, $pass);
+                mysqli_stmt_bind_param($stmt, 'ssss', $uname, $fullname, $email, $pass);
                 mysqli_stmt_execute($stmt);
                 echo "<div class='alert alert-success'>The Product is registered successfully.</div>";
             }else{
@@ -91,7 +91,7 @@ if (isset($_SESSION["user"])) {
                 <input type="text" class="form-control" name="password">
             </div>
             <div class="form-btn">
-                <input type="submit" class="btn btn-primary" value="Add To Product List" name="submit">
+                <input type="submit" class="btn btn-primary" value="Register" name="submit">
             </div>
         </form>
         <div>
