@@ -101,7 +101,7 @@ if (isset($_SESSION["user"])) {
             </div>
         </form>
         <div>
-        <div><p>Review The list?<a href="frontLog2.php">Log in</a></p></div>
+        <div><p>Review The list?<a href="MainLog2.php">Log in</a></p></div>
       </div>
     </div>
 </body>

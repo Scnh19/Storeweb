@@ -1,7 +1,7 @@
 <?php 
 session_start();
 
-if (isset($_SESSION['productname']) && isset($_SESSION['modifiedby'])) {
+if (isset($_SESSION['email']) && isset($_SESSION['psasword'])) {
  ?>
 <!DOCTYPE html>
 <html>
@@ -10,7 +10,7 @@ if (isset($_SESSION['productname']) && isset($_SESSION['modifiedby'])) {
 	<link rel="stylesheet" type="text/css" href="style2.css">
 </head>
 <body>
-     <h1>Hello, <?php echo $_SESSION['modifiedby']; ?></h1>
+     <h1>Hello, <?php echo $_SESSION['user_name']; ?></h1>
      
      <a href="logout.php">Logout</a>
 </body>
@@ -18,7 +18,7 @@ if (isset($_SESSION['productname']) && isset($_SESSION['modifiedby'])) {
 
 <?php 
 }else{
-     header("Location: frontLog2.php");
+     header("Location: index.php");
      exit();
 }
  ?>

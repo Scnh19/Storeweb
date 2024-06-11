@@ -11,11 +11,11 @@
 
      		<p class="error"><?php echo $_GET['error']; ?></p>
      	<?php } ?>
-     	<label>User Name</label>
-     	<input type="text" name="productname" placeholder="Product Name"><br>
+     	<label>Email</label>
+     	<input type="text" name="email" placeholder="Email"><br>
 
      	<label>User Name</label>
-     	<input type="password" name="modifiedby" placeholder="Modifier"><br>
+     	<input type="password" name="password" placeholder="Password"><br>
 
      	<button type="submit">Login</button>
      </form>

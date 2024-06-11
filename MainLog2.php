@@ -2,7 +2,7 @@
 session_start(); 
 include "DataBase2.php";
 
-if (isset($_POST['productname']) && isset($_POST['modifiedby'])) {
+if (isset($_POST['email']) && isset($_POST['password'])) {
 
 	function validate($data){
        $data = trim($data);
@@ -11,36 +11,40 @@ if (isset($_POST['productname']) && isset($_POST['modifiedby'])) {
 	   return $data;
 	}
 
-	$productname = validate($_POST['productname']);
-	$modifiedby = validate($_POST['modifiedby']);
+	$email = validate($_POST['email']);
+	$pass = validate($_POST['password']);
 
-	if (empty($productname)) {
-		header("Location: frontLog2.php?error=User Name is required");
+	if (empty($email)) {
+		header("Location: index.php?error=User Name is required");
 	    exit();
-	}else if(empty($modifiedby)){
-        header("Location: frontLog2.php?error=modifiedby is required");
+	}else if(empty($pass)){
+        header("Location: index.php?error=modifiedby is required");
 	    exit();
 	}else{
-		$sql = "SELECT * FROM productlist WHERE productname='$productname' AND modifiedby='$modifiedby'";
+		$sql = "SELECT * FROM users WHERE email='$email' AND password='$pass'";
 		$result = mysqli_query($conn, $sql);
 
 		if (mysqli_num_rows($result) === 1) {
 			$row = mysqli_fetch_assoc($result);
-            if ($row['productname'] === $productname && $row['modifiedby'] === $modifiedby) {
-            	$_SESSION['productname'] = $row['productname'];
-            	$_SESSION['modifiedby'] = $row['modifiedby'];
+            if ($row['email'] === $email && $row['password'] === $pass) {
+            	$_SESSION['email'] = $row['email'];
+            	$_SESSION['password'] = $row['password'];
             	$_SESSION['id'] = $row['id'];
             	header("Location: HomePage2.php");
 		        exit();
 				
             }else{
-				header("Location: frontLog2.php?error=Incorect productname or modifier");
+				header("Location: index.php?error=Incorect email or password");
 		        exit();
 			}
+		}else{
+			header("Location: index.php?error=Incorect email or password");
+	        exit();
 		}
 	}
 	
-}else{
-	header("Location: frontLog2.php");
+}
+else{
+	header("Location: index.php");
 	exit();
 }

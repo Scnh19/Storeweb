@@ -5,4 +5,5 @@ session_start();
 session_unset();
 session_destroy();
 
-header("Location: frontLog2.php");
+header("Location: MainLog2.php");
+?>
