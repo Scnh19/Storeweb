@@ -1,7 +1,7 @@
 <?php 
 session_start();
 
-if (isset($_SESSION['email']) && isset($_SESSION['psasword'])) {
+if (isset($_SESSION['email']) && isset($_SESSION['password'])) {
  ?>
 <!DOCTYPE html>
 <html>

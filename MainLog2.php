@@ -10,7 +10,7 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
 	   $data = htmlspecialchars($data);
 	   return $data;
 	}
-
+	$username = validate($_POST['user_name']);
 	$email = validate($_POST['email']);
 	$pass = validate($_POST['password']);
 
@@ -27,6 +27,7 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
 		if (mysqli_num_rows($result) === 1) {
 			$row = mysqli_fetch_assoc($result);
             if ($row['email'] === $email && $row['password'] === $pass) {
+				$_SESSION['user_name'] = $row['user_name'];
             	$_SESSION['email'] = $row['email'];
             	$_SESSION['password'] = $row['password'];
             	$_SESSION['id'] = $row['id'];
