@@ -95,7 +95,7 @@ if (isset($_SESSION["user_name"]) && isset($_SESSION["full_name"]) && isset($_SE
             </div>
         </form>
         <div>
-        <div><p>Review The list?<a href="MainLog2.php">Log in</a></p></div>
+        <div><p>Review The list?<a href="index.php">Log in</a></p></div>
       </div>
     </div>
 </body>
