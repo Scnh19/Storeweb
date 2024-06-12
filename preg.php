@@ -15,9 +15,8 @@
            $sku = $_POST["sku"];
            $productname = $_POST["productname"];
            $price = $_POST["price"];
-           $dateadded = $_POST["dateadded"];
-           $modifiedby = $_POST["modifiedby"];
-           echo $sku;
+           $stocks = $_POST["stocks"];
+           /*echo $sku;
            echo "<br>";
            echo $productname;
            echo "<br>";
@@ -25,13 +24,13 @@
            echo "<br>";
            echo $dateadded;
            echo "<br>";
-           echo $modifiedby;
+           echo $modifiedby;*/
            
            $errors = array();
            
-           if (empty($sku) OR empty($productname) OR empty($price) OR empty($dateadded) OR empty($modifiedby)) {
+           if (empty($sku) OR empty($productname) OR empty($price) OR empty($stocks)) {
             array_push($errors,"All fields are required");
-           }
+           }/*
            if (!filter_var($sku)) {
             array_push($errors, "SKU is not valid");
            }
@@ -41,16 +40,13 @@
            if (!filter_var($price)) {
             array_push($errors, "Price is not valid");
            }
-           if (!filter_var($dateadded)) {
-            array_push($errors, "Price is not valid");
-           }
-           if (!filter_var($modifiedby)) {
-            array_push($errors,"Unkown Modifier");
+           if (!filter_var($stocks)) {
+            array_push($errors, "Stock is not valid");
            }
            /*if ($password!==$passwordRepeat) {
             array_push($errors,"Password does not match");
            }*/
-           require_once "database.php";
+           require_once "DataBase2.php";
            $sql = "SELECT * FROM productlist WHERE productname = '$productname'";
            $result = mysqli_query($conn, $sql);
            $rowCount = mysqli_num_rows($result);
@@ -62,11 +58,11 @@
                 echo "<div class='alert alert-danger'>$error</div>";
             }
            }else{
-            $sql = "INSERT INTO productlist (sku, productname, price, dateadded, modifiedby) VALUES ( ?, ?, ?, ?, ?)";
+            $sql = "INSERT INTO productlist (sku, productname, price, stocks) VALUES ( ?, ?, ?, ?)";
             $stmt = mysqli_stmt_init($conn);
             $prepareStmt = mysqli_stmt_prepare($stmt,$sql);
             if ($prepareStmt) {
-                mysqli_stmt_bind_param($stmt, 'sssss', $sku, $productname, $price, $dateadded, $modifiedby);
+                mysqli_stmt_bind_param($stmt, 'ssss', $sku, $productname, $price, $stocks);
                 mysqli_stmt_execute($stmt);
                 echo "<div class='alert alert-success'>The Product is registered successfully.</div>";
             }else{
@@ -76,7 +72,7 @@
         }
         
         ?>
-        <form action="registration.php" method="post">
+        <form action="preg.php" method="post">
             <div class="form-group">
             <label for="">SKU</label>
                 <input type="number" class="form-control" name="sku">
@@ -90,12 +86,8 @@
                 <input type="number" class="form-control" name="price">
             </div>
             <div class="form-group">
-                <label for="">Date & Time</label>
-                <input type="datetime-local" class="form-control" name="dateadded">
-            </div>
-            <div class="form-group">
-                <label for="">Modifier</label>
-                <input type="text" class="form-control" name="modifiedby">
+                <label for="">Stocks</label>
+                <input type="number" class="form-control" name="stocks">
             </div>
             <div class="form-btn">
                 <input type="submit" class="btn btn-primary" value="Add To Product List" name="submit">
