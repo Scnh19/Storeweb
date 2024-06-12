@@ -1,6 +1,6 @@
 <?php 
 session_start();
-if (isset($_SESSION['user_name'])) {
+if (isset($_SESSION['user_name'] )) {
  ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -54,6 +54,7 @@ if (isset($_SESSION['user_name'])) {
            $sql = "SELECT * FROM productlist WHERE productname = '$productname'";
            $result = mysqli_query($conn, $sql);
            $rowCount = mysqli_num_rows($result);
+
            if ($rowCount>0) {
             array_push($errors,"Product already exists.");
            }
@@ -62,11 +63,11 @@ if (isset($_SESSION['user_name'])) {
                 echo "<div class='alert alert-danger'>$error</div>";
             }
            }else{
-            $sql = "INSERT INTO productlist (sku, productname, price, stocks) VALUES ( ?, ?, ?, ?)";
+            $sql1 = "INSERT INTO productlist (sku, productname, price, stocks, addedby) VALUES ( ?, ?, ?, ?, ?)";
             $stmt = mysqli_stmt_init($conn);
-            $prepareStmt = mysqli_stmt_prepare($stmt,$sql);
+            $prepareStmt = mysqli_stmt_prepare($stmt,$sql1);
             if ($prepareStmt) {
-                mysqli_stmt_bind_param($stmt, 'ssss', $sku, $productname, $price, $stocks);
+                mysqli_stmt_bind_param($stmt, 'issss', $sku, $productname, $price, $stocks, $_SESSION['user_name']);
                 mysqli_stmt_execute($stmt);
                 echo "<div class='alert alert-success'>The Product is registered successfully.</div>";
             }else{
@@ -92,9 +93,11 @@ if (isset($_SESSION['user_name'])) {
                 <label for="">Stocks</label>
                 <input type="number" class="form-control" name="stocks">
             </div>
+            <div class="form-group">
+                <input type="hidden" disabled class="form-control" name="username" value=<?php echo $_SESSION['user_name']; ?>>
+            </div>
             <div class="form-btn">
                 <input type="submit" style="background-color: #1A7CEA;" class="btn btn-primary" value="Add To Product List" name="submit"> <br>
-                <input type="submit" style="background-color: #1A7CEA;" class="btn btn-secondary" value="View Product List" name="submit">
             </div>
         </form>
         <div>
