@@ -1,3 +1,8 @@
+<?php
+session_start();
+if (isset($_SESSION["email"]) && isset($_SESSION["password"])) {
+}
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,10 +19,10 @@
      	<label>Email</label>
      	<input type="text" name="email" placeholder="Email"><br>
 
-     	<label>User Name</label>
+     	<label>Password</label>
      	<input type="password" name="password" placeholder="Password"><br>
-
      	<button type="submit">Login</button>
+		<div><p>Dont have account?<a href="Registration2.php">Register</a></p></div>
      </form>
 </body>
 </html>

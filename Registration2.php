@@ -1,7 +1,7 @@
 <?php
 session_start();
-if (isset($_SESSION["user"])) {
-   header("Location: Homepage2.php");
+if (isset($_SESSION["user_name"]) && isset($_SESSION["full_name"]) && isset($_SESSION["email"]) && isset($_SESSION["password"])) {
+    header("Location: index.php");
 }
 ?>
 <!DOCTYPE html>
@@ -22,12 +22,14 @@ if (isset($_SESSION["user"])) {
            $fullname = $_POST["full_name"];
            $email = $_POST["email"];
            $pass = $_POST["password"];
+           $passRepeat = $_POST["repeat_password"];
 
-           $modifiedHash = password_hash($pass, PASSWORD_DEFAULT);
+
+           $passHash = password_hash($pass, PASSWORD_DEFAULT);
            
            $errors = array();
-           
-           if (empty($uname) OR empty($fullname) OR empty($email) OR empty($pass)) {
+
+           if (empty($uname) OR empty($fullname) OR empty($email) OR empty($pass) OR empty($passRepeat)) {
             array_push($errors,"All fields are required");
            }
            if (!filter_var($uname)) {
@@ -43,11 +45,11 @@ if (isset($_SESSION["user"])) {
             array_push($errors, "Password is not valid");
            }
 
-           if ($pass!==$passwordRepeat) {
+           if ($pass!==$passRepeat) {
             array_push($errors,"Password does not match");
            }
 
-           require_once "database2.php";
+           require_once "DataBase2.php";
            $sql = "SELECT * FROM users WHERE email = '$email'";
            $result = mysqli_query($conn, $sql);
            $rowCount = mysqli_num_rows($result);
@@ -59,36 +61,34 @@ if (isset($_SESSION["user"])) {
                 echo "<div class='alert alert-danger'>$error</div>";
             }
            }else{
-            $sql = "INSERT INTO productlist (user_name, full_name, email, password) VALUES ( ?, ?, ?, ?)";
+            $sql = "INSERT INTO users (user_name, full_name, email, password) VALUES ( ?, ?, ?, ?)";
             $stmt = mysqli_stmt_init($conn);
             $prepareStmt = mysqli_stmt_prepare($stmt,$sql);
             if ($prepareStmt) {
-                mysqli_stmt_bind_param($stmt, 'ssss', $uname, $fullname, $email, $pass);
+                mysqli_stmt_bind_param($stmt, 'ssss', $uname, $fullname, $email, $passHash);
                 mysqli_stmt_execute($stmt);
-                echo "<div class='alert alert-success'>The Product is registered successfully.</div>";
+                echo "<div class='alert alert-success'>You have registered successfully.</div>";
             }else{
                 die("Something went wrong");
             }
            }
         }
-        
         ?>
         <form action="Registration2.php" method="post">
             <div class="form-group">
-            <label for="">Username</label>
-                <input type="number" class="form-control" name="user_name">
+                <input type="text" class="form-control" name="user_name" placeholder="UserName:">
             </div>
             <div class="form-group">
-            <label for="">Fullname</label>
-                <input type="text" class="form-control" name="full_name">
+                <input type="text" class="form-control" name="full_name" placeholder="FullName:">
             </div>
             <div class="form-group">
-            <label for="">Email</label>
-                <input type="number" class="form-control" name="email">
+                <input type="text" class="form-control" name="email" placeholder="Email:">
             </div>
             <div class="form-group">
-                <label for="">Password</label>
-                <input type="text" class="form-control" name="password">
+                <input type="password" class="form-control" name="password" placeholder="Password:">
+            </div>
+            <div class="form-group">
+                <input type="password" class="form-control" name="repeat_password" placeholder="Repeat Password:">
             </div>
             <div class="form-btn">
                 <input type="submit" class="btn btn-primary" value="Register" name="submit">

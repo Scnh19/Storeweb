@@ -21,17 +21,18 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
 	    exit();
 	}else{
 		$sql = "SELECT * FROM users WHERE email='$email' AND password='$pass'";
-		$result = mysqli_query($conn, $sql);
+		$result = mysqli_query($conn, $sql) or die(mysqli_error($conn));
+		$count = mysqli_num_rows($result);
+		$row = mysqli_fetch_assoc($result);
+		$hashword =  $row['password'];
 
-		if (mysqli_num_rows($result) === 1) {
-			$row = mysqli_fetch_assoc($result);
+		if (password_verify($_POST['password'],$hashword)) {
             if ($row['email'] === $email && $row['password'] === $pass) {
 				$_SESSION['user_name'] = $row['user_name'];
             	$_SESSION['email'] = $row['email'];
-            	$_SESSION['password'] = $row['password'];
             	$_SESSION['id'] = $row['id'];
-            	header("Location: HomePage2.php");
-		        exit();
+				header("Location: HomePage2.php");
+                exit();
 				
             }else{
 				header("Location: index.php?error=Incorect email or password");
@@ -48,3 +49,4 @@ else{
 	header("Location: index.php");
 	exit();
 }
+?>
