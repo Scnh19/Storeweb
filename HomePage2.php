@@ -11,6 +11,7 @@ if (isset($_SESSION['user_name'])) {
 <body>
      <h1>Hello, <?php echo $_SESSION['user_name']; ?></h1>
      <a href="logout.php">Logout</a>
+     <a href="preg.php">Add List</a>
 </body>
 </html>
 

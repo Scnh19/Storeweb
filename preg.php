@@ -1,3 +1,7 @@
+<?php 
+session_start();
+if (isset($_SESSION['user_name'])) {
+ ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -70,7 +74,6 @@
             }
            }
         }
-        
         ?>
         <form action="preg.php" method="post">
             <div class="form-group">
@@ -90,12 +93,19 @@
                 <input type="number" class="form-control" name="stocks">
             </div>
             <div class="form-btn">
-                <input type="submit" class="btn btn-primary" value="Add To Product List" name="submit">
+                <input type="submit" style="background-color: #1A7CEA;" class="btn btn-primary" value="Add To Product List" name="submit"> <br>
+                <input type="submit" style="background-color: #1A7CEA;" class="btn btn-secondary" value="View Product List" name="submit">
             </div>
         </form>
         <div>
-        <!--<div><p>Already Registered <a href="login.php">Login Here</a></p></div>-->
+        <div><p><a href="HomePage2.php">Back to HomePage</a></p></div>
       </div>
     </div>
+    <?php 
+    }else{
+     header("Location: index.php");
+     exit();
+}
+ ?>
 </body>
 </html>
