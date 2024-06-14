@@ -2,14 +2,13 @@
 session_start();
 
 class Connection{
-  public $host = "db";
-  public $user = "root";
+  public $sname = "db";
+  public $uname = "root";
   public $password = "password";
-  public $db_name = "oop_reglog"; 
+  public $db_name = "oop_reglog";
   public $conn;
-
   public function __construct(){
-    $this->conn = mysqli_connect ($this->host, $this->user, $this->password, $this->db_name);
+    $this->conn = mysqli_connect ($this->sname, $this->uname, $this->password, $this->db_name);
   }
 }
 
@@ -22,7 +21,7 @@ class Register extends Connection{
     }
     else{
       if($password == $confirmpassword){
-        $query = "INSERT INTO tb_user VALUES('', '$name', '$username', '$email', '$password')";
+        $query = "INSERT INTO tb_user VALUES(0, '$name', '$username', '$email', '$password')";
         mysqli_query($this->conn, $query);
         return 1;
         // Registration successful
