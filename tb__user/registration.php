@@ -2,7 +2,7 @@
 require 'function.php';
 
 if(!empty($_SESSION["id"])){
-  header("Location: index.php");
+  header("Location: index1.php");
 }
 
 $register = new Register();
@@ -25,24 +25,25 @@ if(isset($_POST["submit"])){
 }
 ?>
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="en">
   <head>
     <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registration</title>
   </head>
   <body>
     <h2>Registration</h2>
     <form class="" action="" method="post" autocomplete="off">
-      <label for="">Name : </label>
-      <input type="text" name="name" required value=""> <br>
-      <label for="">Username : </label>
-      <input type="text" name="username" required value=""> <br>
-      <label for="">Email : </label>
-      <input type="email" name="email" required value=""> <br>
-      <label for="">Password : </label>
-      <input type="password" name="password" required value=""> <br>
-      <label for="">Confirm Password : </label>
-      <input type="password" name="confirmpassword" required value=""> <br>
+      <input type="text" name="name" required value="" placeholder="Name : "> <br>
+
+      <input type="text" name="username" required value="" placeholder="Username : "> <br>
+      
+      <input type="email" name="email" required value="" placeholder="Email : "> <br>
+
+      <input type="password" name="password" required value="" placeholder="Password : "> <br>
+      
+      <input type="password" name="confirmpassword" required value="" placeholder="Confirm Password : "> <br>
       <button type="submit" name="submit">Register</button>
     </form>
     <br> <br>

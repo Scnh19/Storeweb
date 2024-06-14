@@ -2,14 +2,14 @@
 session_start();
 
 class Connection{
-  public $host = "localhost";
+  public $host = "db";
   public $user = "root";
-  public $password = "";
-  public $db_name = "oop_reglog";
+  public $password = "password";
+  public $db_name = "oop_reglog"; 
   public $conn;
 
   public function __construct(){
-    $this->conn = mysqli_connect($this->host, $this->user, $this->password, $this->db_name);
+    $this->conn = mysqli_connect ($this->host, $this->user, $this->password, $this->db_name);
   }
 }
 
