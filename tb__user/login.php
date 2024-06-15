@@ -2,7 +2,7 @@
 require 'function.php';
 
 if(!empty($_SESSION["id"])){
-  header("Location: index1.php");
+  header("Location: homepage.php");
 }
 
 $login = new Login();
@@ -13,7 +13,7 @@ if(isset($_POST["submit"])){
   if($result == 1){
     $_SESSION["login"] = true;
     $_SESSION["id"] = $login->idUser();
-    header("Location: index1.php");
+    header("Location: homepage.php");
   }
   elseif($result == 10){
     echo
@@ -36,7 +36,7 @@ if(isset($_POST["submit"])){
     <form class="" action="" method="post" autocomplete="off">
       <input type="text" name="usernameemail" required value="" placeholder="Username or Email : "> <br>
       
-      <input type="password" name="password" required value="" placeholder="Password"> <br>
+      <input type="password" name="password" required value="" placeholder="Password : "> <br>
       <button type="submit" name="submit">Login</button>
     </form>
     <br>

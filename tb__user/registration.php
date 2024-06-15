@@ -2,13 +2,13 @@
 require 'function.php';
 
 if(!empty($_SESSION["id"])){
-  header("Location: index1.php");
+  header("Location: homepage.php");
 }
 
 $register = new Register();
 
 if(isset($_POST["submit"])){
-  $result = $register->registration($_POST["name"], $_POST["username"], $_POST["email"], $_POST["password"], $_POST["confirmpassword"]);
+  $result = $register->registration($_POST["fullname"], $_POST["username"], $_POST["email"], $_POST["password"], $_POST["confirmpassword"]);
 
   if($result == 1){
     echo
@@ -35,7 +35,7 @@ if(isset($_POST["submit"])){
   <body>
     <h2>Registration</h2>
     <form class="" action="" method="post" autocomplete="off">
-      <input type="text" name="name" required value="" placeholder="Name : "> <br>
+      <input type="text" name="fullname" required value="" placeholder="Fullname : "> <br>
 
       <input type="text" name="username" required value="" placeholder="Username : "> <br>
       
